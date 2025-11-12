@@ -1,6 +1,14 @@
 import { caller } from "@/trpc/server";
 import Image from "next/image";
 
+/**
+ * Render the homepage and display a greeting fetched from the tRPC server.
+ *
+ * Performs a server-side call to retrieve a greeting and returns the page UI
+ * containing the site logo, instructional text, action links, and the fetched greeting.
+ *
+ * @returns The React element for the homepage, including layout, links, and the fetched greeting text.
+ */
 export default async function Home() {
   const greeting = await caller.hello({ text: "World" });
   return (
