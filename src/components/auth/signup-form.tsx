@@ -62,7 +62,9 @@ export function SignupForm({
       },
       {
         onSuccess: () => {
-          router.push("/");
+          //toast.success("Verification email sent! Please check your inbox.");
+          toast.success("Signup successful! Welcome aboard.");
+          router.push("/dashboard");
         },
         onError: (ctx) => {
           toast.error(
@@ -74,11 +76,13 @@ export function SignupForm({
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn("flex flex-col gap-4 font-sans", className)} {...props}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
-            <h1 className="text-xl font-bold">Get Started with Acme Inc.</h1>
+            <h1 className="text-2xl font-semibold">
+              Get Started with <span className="font-mono">Multi</span>.
+            </h1>
             <FieldDescription>
               Already have an account? <Link href="/login">Sign in</Link>
             </FieldDescription>
