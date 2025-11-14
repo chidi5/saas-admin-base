@@ -15,10 +15,9 @@ export const appRouter = createTRPCRouter({
     }),
 
   getUser: protectedProcedure.query(({ ctx }) => {
-    const user = prisma.user.findUnique({
+    return prisma.user.findUnique({
       where: { id: ctx.auth.user.id },
     });
-    return user;
   }),
 });
 // export type definition of API
