@@ -48,12 +48,12 @@ export function LoginForm({
       {
         email: data.email,
         password: data.password,
-        callbackURL: "/",
+        callbackURL: "/dashboard",
       },
       {
         onSuccess: () => {
           toast.success("Welcome back!");
-          router.push("/");
+          router.push("/dashboard");
         },
         onError: (ctx) => {
           if (ctx.error.status === 403) {
