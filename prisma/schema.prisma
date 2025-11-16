@@ -100,7 +100,7 @@ model Member {
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   userId         String
   user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  role           Role         @default(MEMBER)
+  role           String       
   createdAt      DateTime     @default(now())
 
   @@map("member")
@@ -111,7 +111,7 @@ model Invitation {
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   email          String
-  role           Role?        @default(MEMBER)
+  role           String?       
   status         String
   expiresAt      DateTime
   inviterId      String
@@ -132,10 +132,4 @@ model Project {
 
   @@unique([slug])
   @@map("project")
-}
-
-enum Role {
-  OWNER
-  ADMIN
-  MEMBER
 }

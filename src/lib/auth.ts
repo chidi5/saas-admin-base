@@ -1,9 +1,9 @@
 import { betterAuth } from "better-auth";
-import { organization } from "better-auth/plugins";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import prisma from "./prismadb";
+import { organization } from "better-auth/plugins";
 import { reactInvitationEmail } from "./email/invitation";
 import { resend } from "./email/resend";
+import prisma from "./prismadb";
 
 const from = process.env.MULTI_EMAIL || "delivered@resend.dev";
 
@@ -21,7 +21,6 @@ export const auth = betterAuth({
         subject: "Verify your email address",
         html: `<a href="${url}">Verify your email address</a>`,
       });
-      console.log(res, user.email);
     },
   },
   emailAndPassword: {

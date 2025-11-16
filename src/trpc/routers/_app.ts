@@ -1,7 +1,9 @@
 import { z } from "zod";
 import { baseProcedure, createTRPCRouter, protectedProcedure } from "../init";
 import prisma from "@/lib/prismadb";
+import { organizationRouter } from "./organization";
 export const appRouter = createTRPCRouter({
+  organizations: organizationRouter,
   hello: baseProcedure
     .input(
       z.object({
