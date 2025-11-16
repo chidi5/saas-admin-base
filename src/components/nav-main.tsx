@@ -19,6 +19,14 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 
+/**
+ * Render the "Platform" sidebar navigation from a list of navigation items.
+ *
+ * Each top-level item becomes a menu entry that links to its `url` and shows its `icon` and `title`. If an item includes `items`, those are rendered as a collapsible sub-menu.
+ *
+ * @param items - Array of navigation items. Each item must include `title`, `url`, and `icon`; may include `isActive` to open the item by default; may include `items` which is an array of sub-items `{ title, url }`.
+ * @returns The sidebar group element containing the navigation menu.
+ */
 export function NavMain({
   items,
 }: {

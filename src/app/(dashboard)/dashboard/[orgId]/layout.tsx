@@ -2,6 +2,12 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
+/**
+ * Dashboard layout component that composes the site header, navigation sidebar, and a main content region.
+ *
+ * @param children - Content rendered inside the layout's main content area
+ * @returns A JSX element containing the dashboard layout with header, sidebar, and the provided children
+ */
 export default function DashboardLayout({
   children,
 }: {

@@ -1,3 +1,8 @@
+/**
+ * Render a static dashboard layout with three responsive aspect-ratio tiles and a full-width muted bar.
+ *
+ * @returns A React fragment containing a three-column responsive grid of muted, rounded aspect-video tiles and a full-width muted container beneath.
+ */
 export default function Page() {
   return (
     <>

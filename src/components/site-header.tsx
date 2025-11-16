@@ -15,6 +15,13 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { useSidebar } from "@/components/ui/sidebar"
 
+/**
+ * Render the sticky site header containing a sidebar toggle, breadcrumb trail, and search form.
+ *
+ * The header includes a button that toggles the sidebar when clicked and a breadcrumb that is hidden on small screens.
+ *
+ * @returns The header as a JSX.Element
+ */
 export function SiteHeader() {
   const { toggleSidebar } = useSidebar()
 

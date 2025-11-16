@@ -33,6 +33,15 @@ const signupSchema = z
 
 type SignupFormValues = z.infer<typeof signupSchema>;
 
+/**
+ * Render a signup form with validation and email-based account creation.
+ *
+ * The form includes email, password, and confirm-password fields validated by the
+ * configured schema, a submit button that is disabled while submitting, and
+ * alternative sign-in buttons for Apple and Google.
+ *
+ * @returns A JSX element containing the signup UI and its client-side behavior
+ */
 export function SignupForm({
   className,
   ...props

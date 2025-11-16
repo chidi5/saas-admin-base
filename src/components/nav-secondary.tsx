@@ -9,6 +9,18 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
+/**
+ * Render a secondary navigation group that displays a list of link items with icons.
+ *
+ * Each item is rendered as a menu entry linking to its `url` and showing its `icon` and `title`.
+ *
+ * @param items - Array of navigation items. Each item should include:
+ *   - `title`: label displayed for the item
+ *   - `url`: href for the item's link
+ *   - `icon`: icon component to render alongside the title
+ * @param props - Additional props forwarded to the underlying `SidebarGroup` component.
+ * @returns A JSX element representing the secondary navigation group.
+ */
 export function NavSecondary({
   items,
   ...props

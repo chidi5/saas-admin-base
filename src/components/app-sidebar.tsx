@@ -154,6 +154,14 @@ const data = {
   ],
 };
 
+/**
+ * Renders the application sidebar with navigation, projects, user and a team switcher.
+ *
+ * Fetches organizations on mount and supplies them to the TeamSwitcher in the sidebar header.
+ *
+ * @param props - Props forwarded to the underlying `Sidebar` component.
+ * @returns The rendered `Sidebar` element containing header (TeamSwitcher), content (main nav, projects, secondary nav), and footer (user).
+ */
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [organizations, setOrganizations] = React.useState<Organization[]>([]);
 

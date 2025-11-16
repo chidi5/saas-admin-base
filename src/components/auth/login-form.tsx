@@ -27,6 +27,15 @@ const loginSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
+/**
+ * Render a login form with client-side validation, submission handling, and alternative sign-in options.
+ *
+ * The form uses a Zod schema with react-hook-form for validation, disables inputs while submitting, and shows
+ * toast notifications for success and error states. On successful sign-in the user is redirected to "/dashboard".
+ * If the sign-in request returns a 403 status the component surfaces a "Please verify your email address" error.
+ *
+ * @returns A React element containing the login form UI
+ */
 export function LoginForm({
   className,
   ...props

@@ -24,6 +24,12 @@ import { authClient } from "@/lib/auth-client";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useOrgModal } from "@/hooks/use-org-modal";
 
+/**
+ * Renders a sidebar team switcher button showing the active organization and a dropdown to switch or add workspaces.
+ *
+ * @param teams - List of organizations available to select; used to determine the active organization and populate the dropdown.
+ * @returns The sidebar menu element containing the active org button (avatar and member count) and a dropdown listing each team with a selection shortcut and an "Add Workspace" action.
+ */
 export function TeamSwitcher({ teams }: { teams: Organization[] }) {
   const { isMobile } = useSidebar();
   const router = useRouter();

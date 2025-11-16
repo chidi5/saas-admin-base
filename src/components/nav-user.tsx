@@ -30,6 +30,15 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
+/**
+ * Renders a navigation user dropdown showing avatar, name, email, and quick account actions.
+ *
+ * @param user - Object with the user's display information.
+ *   - name: The user's full name shown in the trigger and header.
+ *   - email: The user's email shown in the trigger and header.
+ *   - avatar: URL of the user's avatar image used for the AvatarImage fallback.
+ * @returns The JSX element for a sidebar navigation user menu with responsive dropdown positioning.
+ */
 export function NavUser({
   user,
 }: {

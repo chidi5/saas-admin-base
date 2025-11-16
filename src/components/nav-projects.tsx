@@ -25,6 +25,12 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
+/**
+ * Render the "Projects" sidebar group containing project links each with an action dropdown.
+ *
+ * @param projects - Array of project descriptors with `name`, `url`, and `icon` used to build each menu item.
+ * @returns The sidebar group element containing project menu items and their action menus.
+ */
 export function NavProjects({
   projects,
 }: {

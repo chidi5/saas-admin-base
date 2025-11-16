@@ -6,6 +6,12 @@ import { headers } from "next/headers";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../init";
 
+/**
+ * Produce a unique URL-friendly slug derived from an organization name.
+ *
+ * @param name - The organization name used as the source for the slug
+ * @returns The unique URL-friendly slug derived from `name`
+ */
 async function generateUniqueSlug(name: string): Promise<string> {
   const baseSlug = name.trim().toLowerCase().replace(/\s+/g, "-");
   let slug = baseSlug;

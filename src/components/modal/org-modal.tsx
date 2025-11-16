@@ -33,6 +33,16 @@ import * as z from "zod";
 import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
 import { Spinner } from "../ui/spinner";
 
+/**
+ * Render a responsive workspace-creation UI that shows a Dialog on desktop or a Drawer on mobile.
+ *
+ * The component synchronizes its open state with the `useOrgModal` hook and hosts the `OrgForm`
+ * for creating a new workspace. On desktop it renders a centered Dialog with a title and description;
+ * on mobile it renders a Drawer with the same content and a Cancel action.
+ *
+ * @returns A JSX element containing either a Dialog (desktop) or a Drawer (mobile) that wraps the OrgForm
+ * and wires open/close changes to the modal hook.
+ */
 export function OrgModal() {
   const { isOpen, onOpen, onClose } = useOrgModal();
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -87,6 +97,14 @@ const orgSchema = z.object({
 
 type OrgFormValues = z.infer<typeof orgSchema>;
 
+/**
+ * Render a workspace creation form that validates input and calls the server to create a new organization.
+ *
+ * Submits the workspace name to the organizations create mutation; on success it shows a success toast, resets the form, invalidates the organizations list cache, and navigates to the new workspace dashboard. On error it shows an error toast.
+ *
+ * @param className - Optional CSS class names applied to the root form element
+ * @returns The form element rendering the workspace creation UI
+ */
 function OrgForm({ className }: React.ComponentProps<"form">) {
   const trpc = useTRPC();
   const router = useRouter();
