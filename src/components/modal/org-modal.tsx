@@ -89,7 +89,6 @@ type OrgFormValues = z.infer<typeof orgSchema>;
 
 function OrgForm({ className }: React.ComponentProps<"form">) {
   const trpc = useTRPC();
-  const router = useRouter();
   const queryClient = useQueryClient();
   const { onClose } = useOrgModal();
 

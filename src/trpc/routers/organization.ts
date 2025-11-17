@@ -26,6 +26,30 @@ async function generateUniqueSlug(name: string): Promise<string> {
 }
 
 export const organizationRouter = createTRPCRouter({
+  count: protectedProcedure.query(async (ctx) => {
+    return auth.api
+      .listOrganizations({ headers: await headers() })
+      .then((orgs) => orgs.length);
+  }),
+
+  invitationCount: protectedProcedure.query(async (ctx) => {
+    return auth.api
+      .listInvitations({ headers: await headers() })
+      .then((invitations) => invitations.length);
+  }),
+
+  pendingInvitation: protectedProcedure
+    .input(
+      z.object({
+        text: z.string(),
+      })
+    )
+    .query(async (ctx) => {
+      return prisma.invitation.findMany({
+        where: { organizationId: ctx.input.text, status: "pending" },
+      });
+    }),
+
   list: protectedProcedure.query(async ({ ctx }) => {
     return auth.api.listOrganizations({
       headers: await headers(),
