@@ -1,6 +1,7 @@
 "use client";
 
 import { OrgModal } from "@/components/modal/org-modal";
+import { ProjectModal } from "@/components/modal/project-modal";
 import { useEffect, useState } from "react";
 
 const ModalProvider = () => {
@@ -15,6 +16,7 @@ const ModalProvider = () => {
   return (
     <>
       <OrgModal />
+      <ProjectModal />
     </>
   );
 };

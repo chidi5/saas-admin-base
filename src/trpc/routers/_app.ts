@@ -1,26 +1,30 @@
-import { z } from "zod";
-import { baseProcedure, createTRPCRouter, protectedProcedure } from "../init";
-import prisma from "@/lib/prismadb";
+import { createTRPCRouter } from "../init";
 import { organizationRouter } from "./organization";
-export const appRouter = createTRPCRouter({
-  organizations: organizationRouter,
-  hello: baseProcedure
-    .input(
-      z.object({
-        text: z.string(),
-      })
-    )
-    .query((opts) => {
-      return {
-        greeting: `hello ${opts.input.text}`,
-      };
-    }),
+import { projectRouter } from "./project";
+import { userRouter } from "./user";
 
-  getUser: protectedProcedure.query(({ ctx }) => {
-    return prisma.user.findUnique({
-      where: { id: ctx.auth.user.id },
-    });
-  }),
+export const appRouter = createTRPCRouter({
+  users: userRouter,
+  projects: projectRouter,
+  organizations: organizationRouter,
 });
 // export type definition of API
 export type AppRouter = typeof appRouter;
+
+// hello: baseProcedure
+//   .input(
+//     z.object({
+//       text: z.string(),
+//     })
+//   )
+//   .query((opts) => {
+//     return {
+//       greeting: `hello ${opts.input.text}`,
+//     };
+//   }),
+
+// getUser: protectedProcedure.query(({ ctx }) => {
+//   return prisma.user.findUnique({
+//     where: { id: ctx.auth.user.id },
+//   });
+// }),

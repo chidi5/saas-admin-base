@@ -21,7 +21,7 @@ import {
 import { useParams, useRouter } from "next/navigation";
 import { Organization } from "better-auth/plugins";
 import { authClient } from "@/lib/auth-client";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useOrgModal } from "@/hooks/use-org-modal";
 
 export function TeamSwitcher({ teams }: { teams: Organization[] }) {
