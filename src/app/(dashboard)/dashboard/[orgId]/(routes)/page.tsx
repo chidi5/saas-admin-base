@@ -5,29 +5,37 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import Loading from "./loading";
 import { Suspense } from "react";
 
-export default async function Page({ params }: { params: { orgId: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ orgId: string }>;
+}) {
   await requireAuth();
   const { orgId } = await params;
+
+  if (!orgId) {
+    throw new Error("Organization ID is required");
+  }
+
   const queryClient = getQueryClient();
 
+  // Prefetch all queries with proper parameters
   await Promise.all([
-    void queryClient.prefetchQuery(
-      trpc.users.count.queryOptions({ text: orgId })
-    ),
-    void queryClient.prefetchQuery(
+    queryClient.prefetchQuery(trpc.users.count.queryOptions({ text: orgId })),
+    queryClient.prefetchQuery(
       trpc.projects.count.queryOptions({ text: orgId })
     ),
-    void queryClient.prefetchQuery(trpc.organizations.count.queryOptions()),
-    void queryClient.prefetchQuery(
+    queryClient.prefetchQuery(trpc.organizations.count.queryOptions()),
+    queryClient.prefetchQuery(
       trpc.organizations.pendingInvitation.queryOptions({ text: orgId })
     ),
-    void queryClient.prefetchQuery(
+    queryClient.prefetchQuery(
       trpc.users.recentUser.queryOptions({ text: orgId })
     ),
-    void queryClient.prefetchQuery(
+    queryClient.prefetchQuery(
       trpc.projects.recentProject.queryOptions({ text: orgId })
     ),
-    void queryClient.prefetchQuery(trpc.organizations.list.queryOptions()),
+    queryClient.prefetchQuery(trpc.organizations.list.queryOptions()),
   ]);
 
   return (

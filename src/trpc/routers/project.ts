@@ -222,12 +222,28 @@ export const projectRouter = createTRPCRouter({
         where: {
           id: existingProject.organizationId,
         },
+        include: {
+          members: {
+            where: { userId: ctx.auth.user.id },
+          },
+        },
       });
 
       if (!organization) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "You don't have access to delete this project",
+        });
+      }
+
+      if (
+        organization.members.length === 0 ||
+        (organization.members[0].role !== "owner" &&
+          organization.members[0].role !== "admin")
+      ) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Only owners or admins can delete projects",
         });
       }
 
