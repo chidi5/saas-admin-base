@@ -4,7 +4,7 @@ import prisma from "@/lib/prismadb";
 import { TRPCError } from "@trpc/server";
 import { headers } from "next/headers";
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "../init";
+import { baseProcedure, createTRPCRouter, protectedProcedure } from "../init";
 
 async function generateUniqueSlug(name: string): Promise<string> {
   const baseSlug = name.trim().toLowerCase().replace(/\s+/g, "-");
@@ -113,6 +113,7 @@ export const organizationRouter = createTRPCRouter({
         query: {
           organizationId: input.orgId,
         },
+        headers: await headers(),
       });
 
       return invitations;
@@ -166,6 +167,7 @@ export const organizationRouter = createTRPCRouter({
 
       return auth.api.updateMemberRole({
         body: { memberId: input.memberId, role: input.role },
+        headers: await headers(),
       });
     }),
 
@@ -215,6 +217,7 @@ export const organizationRouter = createTRPCRouter({
 
       return auth.api.removeMember({
         body: { memberIdOrEmail: input.memberId, organizationId: input.orgId },
+        headers: await headers(),
       });
     }),
 
@@ -233,6 +236,7 @@ export const organizationRouter = createTRPCRouter({
           organizationId: input.orgId,
           role: input.role,
         },
+        headers: await headers(),
       });
 
       return { success: true };
@@ -258,6 +262,7 @@ export const organizationRouter = createTRPCRouter({
           organizationId: invitation.organizationId,
           role: (invitation.role as "admin" | "member" | "owner") || "member",
         },
+        headers: await headers(),
       });
 
       return { success: true };
@@ -268,6 +273,57 @@ export const organizationRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return auth.api.cancelInvitation({
         body: { invitationId: input.invitationId },
+        headers: await headers(),
       });
+    }),
+
+  getPublicInvitation: baseProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      const invitation = await prisma.invitation.findUnique({
+        where: { id: input.id },
+        include: {
+          organization: {
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+              logo: true,
+            },
+          },
+          user: {
+            select: {
+              email: true,
+              name: true,
+            },
+          },
+        },
+      });
+
+      if (!invitation) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Invitation not found",
+        });
+      }
+
+      const isExpired = new Date(invitation.expiresAt) < new Date();
+      const isValid = invitation.status === "pending" && !isExpired;
+
+      return {
+        id: invitation.id,
+        email: invitation.email,
+        role: invitation.role || "member",
+        status: invitation.status,
+        expiresAt: invitation.expiresAt,
+        organizationId: invitation.organizationId,
+        organizationName: invitation.organization.name,
+        organizationSlug: invitation.organization.slug,
+        organizationLogo: invitation.organization.logo,
+        inviterEmail: invitation.user.email,
+        inviterName: invitation.user.name,
+        isExpired,
+        isValid,
+      };
     }),
 });
