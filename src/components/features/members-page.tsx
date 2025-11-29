@@ -2,7 +2,6 @@
 
 import { createInvitationsColumns } from "@/components/columns/invitations-columns";
 import { createMembersColumns } from "@/components/columns/members-columns";
-import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { DataTable } from "@/components/ui/data-table";
 import {
   Dialog,
   DialogContent,
@@ -234,11 +234,11 @@ export function MembersPage({ orgId, userId }: MembersPageProps) {
         <TabsList>
           <TabsTrigger value="members" className="gap-2">
             <Users className="h-4 w-4" />
-            Members ({members.members.length})
+            Members ({members.total})
           </TabsTrigger>
           <TabsTrigger value="invitations" className="gap-2">
             <Mail className="h-4 w-4" />
-            Invitations ({invitations.total})
+            Invitations ({invitations.length})
           </TabsTrigger>
         </TabsList>
 
@@ -254,7 +254,7 @@ export function MembersPage({ orgId, userId }: MembersPageProps) {
               <DataTable
                 columns={membersColumns}
                 data={members.members}
-                searchKey="user"
+                searchKey="member"
                 searchPlaceholder="Search members..."
               />
             </CardContent>
@@ -272,7 +272,7 @@ export function MembersPage({ orgId, userId }: MembersPageProps) {
             <CardContent>
               <DataTable
                 columns={invitationsColumns}
-                data={invitations.invitations}
+                data={invitations}
                 searchKey="email"
                 searchPlaceholder="Search invitations..."
               />

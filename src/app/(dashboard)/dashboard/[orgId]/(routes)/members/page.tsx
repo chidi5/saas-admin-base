@@ -27,7 +27,7 @@ export default async function Page({
     <div className="py-6">
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={<Spinner />}>
-          <MembersPage orgId={orgId} userId={session.user.id} />
+          <MembersPage orgId={orgId} userId={session.session.userId} />
         </Suspense>
       </HydrationBoundary>
     </div>
